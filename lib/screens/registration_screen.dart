@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:conduit/models/loggedin_user.dart';
 import 'package:conduit/screens/home_screen.dart';
 import 'package:conduit/screens/login_screen.dart';
 import 'package:conduit/utils/constants.dart';
+import 'package:conduit/utils/global_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -314,13 +316,15 @@ class _RegistrationState extends State<Registration> {
     var response = await http.post(url,
         headers: {"Content-Type": "application/json"}, body: body);
     var jsonRes = jsonDecode(response.body);
-    print(jsonRes);
+    // print(jsonRes);
+    GlobalData.loggedinUser = LoggedinUser.fromJson(jsonRes);
+    print("TOKEN :" + GlobalData.loggedinUser.user.token);
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
-      //prefs.setString('userToken', jsonRes["user"]["token"]);
+      prefs.setString('userToken', GlobalData.loggedinUser.user.token);
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
     });
-    //print(prefs.getString('userToken'));
-   // Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
   }
 }
