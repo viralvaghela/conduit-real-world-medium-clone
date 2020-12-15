@@ -1,8 +1,8 @@
-import 'dart:async';
-
 import 'package:conduit/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -13,10 +13,20 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), () {
+    checkAlreadyLoggedin();
+  }
+
+  checkAlreadyLoggedin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    //if its not null then redirect to home screen...no need to login again
+    if (prefs.getString('userToken') != null) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+    } else {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) => Registration()));
-    });
+    }
   }
 
   @override
@@ -43,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       backgroundColor: Colors.white,
                       radius: 50.0,
                       child: Icon(
-                        Icons.book ,
+                        Icons.book,
                         size: 70,
                         color: Colors.black,
                       ),
@@ -51,10 +61,8 @@ class _SplashScreenState extends State<SplashScreen> {
                     Padding(
                       padding: EdgeInsets.only(top: 10.0),
                     ),
-                    Text(
-                        "Conduit",
-                        style: TextStyle(fontSize: 20,color: Colors.white)
-                    )
+                    Text("Conduit",
+                        style: TextStyle(fontSize: 20, color: Colors.white))
                   ],
                 ),
               ),
