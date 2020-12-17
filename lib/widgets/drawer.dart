@@ -1,7 +1,8 @@
+import 'package:conduit/utils/global_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class drawer extends StatelessWidget{
+class drawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -13,8 +14,8 @@ class drawer extends StatelessWidget{
             child: ListView(
               children: <Widget>[
                 UserAccountsDrawerHeader(
-                    accountName: Text("accountName"),
-                    accountEmail:  Text("email address"),
+                    accountName: Text("${GlobalData.loggedinUser.user.username}"),
+                    accountEmail: Text("email address"),
                     currentAccountPicture: CircleAvatar(
                       backgroundColor: Colors.white,
                       child: Text("C"),
@@ -23,7 +24,6 @@ class drawer extends StatelessWidget{
                     leading: Icon(Icons.home),
                     title: Text('Dark mode'),
                     onTap: () => {}),
-
               ],
             ),
           ),
@@ -39,10 +39,9 @@ class drawer extends StatelessWidget{
                   children: <Widget>[
                     Divider(),
                     ListTile(
-                      leading: Icon(Icons.logout),
-                      title: Text('Logout'),
-                      onTap: () {}
-                    ),
+                        leading: Icon(Icons.logout),
+                        title: Text('Logout'),
+                        onTap: () {}),
                   ],
                 ),
               ),
@@ -52,5 +51,4 @@ class drawer extends StatelessWidget{
       ),
     );
   }
-
 }
