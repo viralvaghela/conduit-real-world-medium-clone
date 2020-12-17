@@ -8,4 +8,5 @@ class GlobalData  {
 
  //SharedPreferences prefs = await SharedPreferences.getInstance();
 }
-GlobalArticles globalArticles;
+
+LoggedinUser loggedinUser;
